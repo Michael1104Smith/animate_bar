@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<link href="css/style.css" rel="stylesheet">
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+<link href="css/bootstrap-toggle.css" rel="stylesheet">
+<body>
+	<div id="toggle_btn">
+		<input id="bt" type="checkbox" checked data-toggle="toggle" data-on="Relative Abundance" data-off="Absolute Abundance" data-onstyle="success" data-offstyle="danger">
+	</div>
+	<svg id="svg" transform="translate(0,50)">
+		<g id="control_chart7"></g>
+		<g id="control_chart6"></g>
+		<g id="control_chart5"></g>
+		<g id="control_chart4"></g>
+		<g id="control_chart3"></g>
+		<g id="control_chart2"></g>
+		<g id="control_chart1"></g>
+		<g id="alchol_chart7"></g>
+		<g id="alchol_chart6"></g>
+		<g id="alchol_chart5"></g>
+		<g id="alchol_chart4"></g>
+		<g id="alchol_chart3"></g>
+		<g id="alchol_chart2"></g>
+		<g id="alchol_chart1"></g>
+		<g id="alchol_chart"></g>
+		<g id="axis_chart"></g>
+		<g id="tick_line"></g>
+		<g id="tick_text"></g>
+		<g id="text_chart"></g>
+	</svg>
+</body>
+<script src="js/jquery-git2.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script src="js/bootstrap-toggle.js"></script>
+<script src="js/d3.v3.min.js"></script>
+<script>
+
+	var flag = 1;
+
+	var rect_width;
+	var rect_height;
+	var margin_top;
+	var distance;
+	var margin_left;
+    var tick_width;
+    var fontSize;
+
+    var relative_tick_count = 10;
+    var absolute_tick_count = 6;
+
+    var absolute_max_y = 12000;
+    var relative_max_y = 100;
+	var durationTime = 300;
+	var delayduration = durationTime/5;
+
+	var Relative_Control_Data = [];
+	var Absolute_Control_Data = [];
+	var Relative_Alchol_Data = [];
+	var Absolute_Alchol_Data = [];
+	var Tick_Line_Data = [];
+	var Tick_Text_Data = [];
+
+    var y_string = ['Bacteria', 'Verrucomicrobia', 'TM7', 'Proteobacteria','Firmicutes', 'Bacteroidetes', 'Actinobacteria'];
+    var relative_data = {Control:[19, 2, 1, 1,70, 6, 1], Alchol:[30, 5, 1, 2,44, 17, 1]};
+    var absolute_data = {Control:[190, 20, 10, 10,700, 60, 10], Alchol:[3000, 500, 100, 200,4400, 1700, 100]};
+    var fill_color = ['#f2edf8','#e2efba','#ff0000','#000000','#b7b500','#fdce95','#0575ff'];
+    var stroke_color = '#818082';
+    var axis_color = '#cbcbcb';
+
+    function Init(){
+		rect_width = parseInt($('#svg').css('width'))/5.5;
+		rect_height = rect_width*3.5;
+		margin_top = rect_width/8;
+		fontSize = 15;
+		if(rect_width<200) fontSize = 13;
+		distance = rect_width/2;
+		margin_left = rect_width;
+	    tick_width = rect_width/16;
+		Alchol_Data = [];
+		Tick_Line_Data = [];
+		Tick_Text_Data = [];
+    	if(flag == 1){
+			SetRelative();
+    	}else{
+			SetAbsolute();
+    	}
+    }
+
+	$(document).ready(function(){
+		Init();
+        drawCharts(1);
+
+        $('.toggle-group').click(function(){
+        	flag = 1 - flag;
+        	Init();
+        	drawCharts(3);
+        });
+	});
+
+	$(window).resize(function(){
+		Init();
+        drawCharts(2);
+	});
+
+</script>
+<script src="js/AbsoluteChart.js"></script>
+<script src="js/RelativeChart.js"></script>
+<script src="js/drawCharts.js"></script>
